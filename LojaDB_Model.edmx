@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LojaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Despesas_Table">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="50" />
+          <Property Name="Descrição" Type="nvarchar(max)" />
+          <Property Name="Factura" Type="bit" />
+          <Property Name="Retalho" Type="bit" />
+          <Property Name="Valor" Type="float" />
+          <Property Name="Data" Type="date" />
+        </EntityType>
+        <EntityType Name="IVA_Table">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IVA" Type="int" />
+          <Property Name="Descrição" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Produto_Table">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="50" />
+          <Property Name="IVA" Type="int" />
+          <Property Name="Valor_compra" Type="float" />
+          <Property Name="Valor_final" Type="float" />
+        </EntityType>
+        <EntityType Name="Receita_Table">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Valor" Type="float" />
+          <Property Name="Data" Type="date" />
+        </EntityType>
+        <Association Name="FK_IVA_Table_Produto_Table">
+          <End Role="IVA_Table" Type="Self.IVA_Table" Multiplicity="0..1" />
+          <End Role="Produto_Table" Type="Self.Produto_Table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IVA_Table">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Produto_Table">
+              <PropertyRef Name="IVA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LojaDBModelStoreContainer">
+          <EntitySet Name="Despesas_Table" EntityType="Self.Despesas_Table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IVA_Table" EntityType="Self.IVA_Table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Produto_Table" EntityType="Self.Produto_Table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Receita_Table" EntityType="Self.Receita_Table" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_IVA_Table_Produto_Table" Association="Self.FK_IVA_Table_Produto_Table">
+            <End Role="IVA_Table" EntitySet="IVA_Table" />
+            <End Role="Produto_Table" EntitySet="Produto_Table" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LojaDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Despesas_Table">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Descrição" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Factura" Type="Boolean" />
+          <Property Name="Retalho" Type="Boolean" />
+          <Property Name="Valor" Type="Double" />
+          <Property Name="Data" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="IVA_Table">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IVA" Type="Int32" />
+          <Property Name="Descrição" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Produto_Table" Relationship="Self.FK_IVA_Table_Produto_Table" FromRole="IVA_Table" ToRole="Produto_Table" />
+        </EntityType>
+        <EntityType Name="Produto_Table">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IVA" Type="Int32" />
+          <Property Name="Valor_compra" Type="Double" />
+          <Property Name="Valor_final" Type="Double" />
+          <NavigationProperty Name="IVA_Table" Relationship="Self.FK_IVA_Table_Produto_Table" FromRole="Produto_Table" ToRole="IVA_Table" />
+        </EntityType>
+        <Association Name="FK_IVA_Table_Produto_Table">
+          <End Role="IVA_Table" Type="Self.IVA_Table" Multiplicity="0..1" />
+          <End Role="Produto_Table" Type="Self.Produto_Table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IVA_Table">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Produto_Table">
+              <PropertyRef Name="IVA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LojaDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Despesas_Table" EntityType="Self.Despesas_Table" />
+          <EntitySet Name="IVA_Table" EntityType="Self.IVA_Table" />
+          <EntitySet Name="Produto_Table" EntityType="Self.Produto_Table" />
+          <AssociationSet Name="FK_IVA_Table_Produto_Table" Association="Self.FK_IVA_Table_Produto_Table">
+            <End Role="IVA_Table" EntitySet="IVA_Table" />
+            <End Role="Produto_Table" EntitySet="Produto_Table" />
+          </AssociationSet>
+          <EntitySet Name="Receita_Table" EntityType="LojaDBModel.Receita_Table" />
+        </EntityContainer>
+        <EntityType Name="Receita_Table">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Valor" Type="Double" />
+          <Property Name="Data" Type="DateTime" Precision="0" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LojaDBModelStoreContainer" CdmEntityContainer="LojaDBEntities">
+          <EntitySetMapping Name="Despesas_Table">
+            <EntityTypeMapping TypeName="LojaDBModel.Despesas_Table">
+              <MappingFragment StoreEntitySet="Despesas_Table">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+                <ScalarProperty Name="Factura" ColumnName="Factura" />
+                <ScalarProperty Name="Retalho" ColumnName="Retalho" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IVA_Table">
+            <EntityTypeMapping TypeName="LojaDBModel.IVA_Table">
+              <MappingFragment StoreEntitySet="IVA_Table">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IVA" ColumnName="IVA" />
+                <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Produto_Table">
+            <EntityTypeMapping TypeName="LojaDBModel.Produto_Table">
+              <MappingFragment StoreEntitySet="Produto_Table">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="IVA" ColumnName="IVA" />
+                <ScalarProperty Name="Valor_compra" ColumnName="Valor_compra" />
+                <ScalarProperty Name="Valor_final" ColumnName="Valor_final" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Receita_Table">
+            <EntityTypeMapping TypeName="LojaDBModel.Receita_Table">
+              <MappingFragment StoreEntitySet="Receita_Table">
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

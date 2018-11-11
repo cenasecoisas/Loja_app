@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="LojaDBModelStoreContainer" CdmEntityContainer="LojaDBEntities">
+    <EntitySetMapping Name="Despesas_Table">
+      <EntityTypeMapping TypeName="LojaDBModel.Despesas_Table">
+        <MappingFragment StoreEntitySet="Despesas_Table">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+          <ScalarProperty Name="Factura" ColumnName="Factura" />
+          <ScalarProperty Name="Retalho" ColumnName="Retalho" />
+          <ScalarProperty Name="Valor" ColumnName="Valor" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IVA_Table">
+      <EntityTypeMapping TypeName="LojaDBModel.IVA_Table">
+        <MappingFragment StoreEntitySet="IVA_Table">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="IVA" ColumnName="IVA" />
+          <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Produto_Table">
+      <EntityTypeMapping TypeName="LojaDBModel.Produto_Table">
+        <MappingFragment StoreEntitySet="Produto_Table">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="IVA" ColumnName="IVA" />
+          <ScalarProperty Name="Valor_compra" ColumnName="Valor_compra" />
+          <ScalarProperty Name="Valor_final" ColumnName="Valor_final" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Receita_Table">
+      <EntityTypeMapping TypeName="LojaDBModel.Receita_Table">
+        <MappingFragment StoreEntitySet="Receita_Table">
+          <ScalarProperty Name="Data" ColumnName="Data" />
+          <ScalarProperty Name="Valor" ColumnName="Valor" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

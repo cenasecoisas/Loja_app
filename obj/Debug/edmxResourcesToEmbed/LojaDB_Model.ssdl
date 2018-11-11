@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LojaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Despesas_Table">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nome" Type="nvarchar" MaxLength="50" />
+    <Property Name="Descrição" Type="nvarchar(max)" />
+    <Property Name="Factura" Type="bit" />
+    <Property Name="Retalho" Type="bit" />
+    <Property Name="Valor" Type="float" />
+    <Property Name="Data" Type="date" />
+  </EntityType>
+  <EntityType Name="IVA_Table">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IVA" Type="int" />
+    <Property Name="Descrição" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Produto_Table">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nome" Type="nvarchar" MaxLength="50" />
+    <Property Name="IVA" Type="int" />
+    <Property Name="Valor_compra" Type="float" />
+    <Property Name="Valor_final" Type="float" />
+  </EntityType>
+  <EntityType Name="Receita_Table">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Valor" Type="float" />
+    <Property Name="Data" Type="date" />
+  </EntityType>
+  <Association Name="FK_IVA_Table_Produto_Table">
+    <End Role="IVA_Table" Type="Self.IVA_Table" Multiplicity="0..1" />
+    <End Role="Produto_Table" Type="Self.Produto_Table" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IVA_Table">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Produto_Table">
+        <PropertyRef Name="IVA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="LojaDBModelStoreContainer">
+    <EntitySet Name="Despesas_Table" EntityType="Self.Despesas_Table" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IVA_Table" EntityType="Self.IVA_Table" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Produto_Table" EntityType="Self.Produto_Table" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Receita_Table" EntityType="Self.Receita_Table" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_IVA_Table_Produto_Table" Association="Self.FK_IVA_Table_Produto_Table">
+      <End Role="IVA_Table" EntitySet="IVA_Table" />
+      <End Role="Produto_Table" EntitySet="Produto_Table" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
